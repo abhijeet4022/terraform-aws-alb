@@ -4,7 +4,7 @@ resource "aws_lb" "main" {
   internal           = var.internal
   load_balancer_type = var.load_balancer_type
   security_groups    = [aws_security_group.lb_sg.id]
-  subnets            = [for subnet in aws_subnet.public : subnet.id]
+  subnets            = var.subnets
   tags               = merge(local.tags, { Name = local.load_balancer_name })
 }
 
