@@ -20,18 +20,19 @@ resource "aws_security_group" "lb_sg" {
 
 # Ingress rule for ALB SG.
 resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
+  for_each          = toset(var.cidr_block) # Convert list to a set to iterate over each CIDR
   security_group_id = aws_security_group.lb_sg.id
-  cidr_ipv4         = var.cidr_block
+  cidr_ipv4         = each.value  # Each CIDR block as a separate rule
   from_port         = var.sg_port
   ip_protocol       = "tcp"
   to_port           = var.sg_port
 }
 
 
-# # Egress rule for ALB SG.
-# resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
-#   security_group_id = aws_security_group.lb_sg.id
-#   cidr_ipv4         = ["0.0.0.0/0"]
-#   ip_protocol       = "-1" # semantically equivalent to all ports
-# }
-#
+# Egress rule for ALB SG.
+resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
+  security_group_id = aws_security_group.lb_sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1" # semantically equivalent to all ports
+}
+
