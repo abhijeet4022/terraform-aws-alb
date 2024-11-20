@@ -29,3 +29,7 @@ variable "sg_port" {
 variable "subnets" {
   description = "A list of subnets in which to deploy the ALB. Use public subnets for an external ALB or private subnets for an internal ALB."
 }
+
+variable "acm" {
+  description = "Provide the Certificate ARN"
+}
