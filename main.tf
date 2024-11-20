@@ -37,6 +37,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_http" {
   from_port         = 80
   to_port           = 80
   ip_protocol       = "tcp"
+  tags              = { Name = "User-to-Application" }
 }
 
 
