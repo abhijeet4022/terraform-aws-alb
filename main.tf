@@ -30,7 +30,7 @@ resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
 
 
 # Ingress rule for Public ALB SG.
-resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
+resource "aws_vpc_security_group_ingress_rule" "allow_http" {
   count             = var.internal ? 0 : 1
   security_group_id = aws_security_group.lb_sg.id
   cidr_ipv4         = var.cidr_block  # Each CIDR block as a separate rule
